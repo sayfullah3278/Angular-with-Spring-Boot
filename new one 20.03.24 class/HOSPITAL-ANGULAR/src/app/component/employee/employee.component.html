@@ -1,0 +1,85 @@
+<div class="container mt-3">
+  <h2>Employee List</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Father Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Address</th>
+        <th>Contact</th>
+        <th>Gender</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.employee_id }}</td>
+        <td>{{ employee.full_name }}</td>
+        <td>{{ employee.father_name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.dob }}</td>
+        <td>{{ employee.address }}</td>
+        <td>{{ employee.contact }}</td>
+        <td>{{ employee.gender }}</td>
+        <td>{{ employee.category }}</td>
+        
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="editEmployee(employee)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteEmployee(employee.employee_id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-3">
+  <h2>{{ isEdit ? 'Edit Employee' : 'Add Employee' }}</h2>
+  <form (submit)="addOrUpdateEmployee()">
+    <div class="mb-3">
+      <label for="full_name" class="form-label">Full Name:</label>
+      <input type="text" class="form-control" id="full_name" name="full_name" [(ngModel)]="employee.full_name" required>
+    </div>
+    <div class="mb-3">
+      <label for="father_name" class="form-label">Father's Name:</label>
+      <input type="text" class="form-control" id="father_name" name="father_name" [(ngModel)]="employee.father_name" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="employee.email" required>
+    </div>
+    <div class="mb-3">
+      <label for="dob" class="form-label">Date of Birth:</label>
+      <input type="date" class="form-control" id="dob" name="dob" [(ngModel)]="employee.dob" required>
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Address:</label>
+      <textarea class="form-control" id="address" name="address" [(ngModel)]="employee.address" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="contact" class="form-label">Contact:</label>
+      <input type="text" class="form-control" id="contact" name="contact" [(ngModel)]="employee.contact" required>
+    </div>
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender:</label>
+      <input type="text" class="form-control" id="gender" name="gender" [(ngModel)]="employee.gender" required>
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category:</label>
+      <select class="form-select" id="category" name="category" [(ngModel)]="employee.category" required>
+        <option value="">Select Category</option>
+        <option value="Accounce">Accounce</option>
+        <option value="Reciption">Reciption</option>
+        <option value="Nurse">Nurse</option>
+        <option value="Clark">Clark</option>
+        <option value="Guard">Guard  </option>
+        <!-- Add more options as needed -->
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ isEdit ? 'Update' : 'Add' }}</button>
+    <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+  </form>
+</div>

@@ -1,0 +1,109 @@
+<div class="container">
+  <h1 class="mt-5">{{ isNewAppointment ? 'New Appointment Form' : 'Edit Appointment Form' }}</h1>
+  <form class="mt-4" (ngSubmit)="saveAppointment()">
+    <!-- Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="selectedAppointment.name" required>
+    </div>
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="selectedAppointment.email" required>
+    </div>
+    <!-- Phone -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone:</label>
+      <input type="tel" class="form-control" id="phone" name="phone" [(ngModel)]="selectedAppointment.phone" required>
+    </div>
+    <!-- Date -->
+    <div class="mb-3">
+      <label for="date" class="form-label">Date:</label>
+      <input type="date" class="form-control" id="date" name="date" [(ngModel)]="selectedAppointment.date" required>
+    </div>
+    <!-- Department -->
+
+
+    <div class="mb-3">
+      <label for="department" class="form-label">Department:</label>
+      <select class="form-select" id="department" name="department" [(ngModel)]="selectedAppointment.department" required>
+        <option value="">Select Department</option>
+        <!-- Loop through doctors to populate options -->
+        <option *ngFor="let doctor of doctors" [value]="doctor.department">{{ doctor.department }}</option>
+      </select>
+    </div>
+    <!-- Doctor Selection -->
+    <div class="mb-3">
+      <label for="doctor" class="form-label">Doctor:</label>
+      <select class="form-select" id="doctor" name="doctor" [(ngModel)]="selectedAppointment.doctorName" required>
+        <option value="">Select Doctor</option>
+        <!-- Loop through doctor departments -->
+        <ng-container *ngFor="let department of doctorDepartments">
+          <optgroup label="{{ department }}">
+            <!-- Loop through filtered doctors for each department -->
+            <option *ngFor="let doctor of filterDoctorsByDepartment(department)" [value]="doctor.doctorName">{{ doctor.doctorName }}</option>
+          </optgroup>
+        </ng-container>
+      </select>
+    </div>
+    <!-- <div class="mb-3">
+      <label for="department" class="form-label">Department:</label>
+      <input type="text" class="form-control" id="department" name="department" [(ngModel)]="selectedAppointment.department" required>
+    </div>
+    <-- Doctor Name -->
+    <!-- <div class="mb-3">
+      <label for="doctorName" class="form-label">Doctor Name:</label>
+      <select class="form-select" id="doctorName" name="doctorName" [(ngModel)]="selectedAppointment.doctorName" required>
+        <option value="">Select Doctor</option>
+        <-- Loop through doctors to populate options -->
+        <!-- <option *ngFor="let doctor of doctors" [value]="doctor.name">{{ doctor.name }}</option>
+      </select>
+    </div> -->
+    <!-- Disease -->
+    <div class="mb-3">
+      <label for="disease" class="form-label">Disease:</label>
+      <input type="text" class="form-control" id="disease" name="disease" [(ngModel)]="selectedAppointment.disease" required>
+    </div>
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">{{ isNewAppointment ? 'Add' : 'Update' }} Appointment</button>
+      <button type="button" class="btn btn-danger" (click)="createAppointment()">Cancel</button>
+    </div>
+  </form>
+
+  <h2 class="mt-5">Appointments</h2>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th>Appointment ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Date</th>
+        <th>Department</th>
+        <th>Doctor Name</th>
+        <th>Disease</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through appointments to populate table rows -->
+      <tr *ngFor="let appointment of appointments">
+        <td>{{ appointment.appointment_id }}</td>
+        <td>{{ appointment.name }}</td>
+        <td>{{ appointment.email }}</td>
+        <td>{{ appointment.phone }}</td>
+        <td>{{ appointment.date }}</td>
+        <td>{{ appointment.department }}</td>
+        <td>{{ appointment.doctorName }}</td>
+        <td>{{ appointment.disease }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="onSelect(appointment)">Edit</button>
+          <!-- <button class="btn btn-sm btn-danger" (click)="deleteAppointment(appointment)">Delete</button> -->
+<button class="btn btn-sm btn-danger" (click)="deleteAppointment(appointment?.appointment_id)">Delete</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

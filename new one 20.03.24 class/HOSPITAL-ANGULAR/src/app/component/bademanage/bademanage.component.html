@@ -1,0 +1,45 @@
+<!-- bade-manage.component.html -->
+
+<form [formGroup]="bedForm2" >
+    <div>
+      <label for="bedNumber">Bed Number:</label>
+      <input type="text" id="bedNumber" formControlName="bedNumber">
+    </div>
+    <div>
+      <label for="bedCharge">Bed Charge:</label>
+      <input type="number" id="bedCharge" formControlName="bedCharge">
+    </div>
+    <div>
+      <label for="bedCatagori">Bed Category:</label>
+      <input type="text" id="bedCatagori" formControlName="bedCatagori">
+    </div>
+    <button type="submit" (click)="onSubmit()">Submit</button>
+    <button type="submit" (click)="editBads()">update</button>
+  </form>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Bed ID</th>
+        <th>Bed Number</th>
+        <th>Bed Charge</th>
+        <th>Bed Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bed of beds">
+        <td>{{ bed.bedId }}</td>
+        <td>{{ bed.bedNumber }}</td>
+        <td>{{ bed.bedCharge }}</td>
+        <td>{{ bed.bedCatagori }}</td>
+        <td>
+         
+          <button (click)="deleteBed(bed.bedId)">Delete</button>
+          <button (click)="editBadByid(bed)">Update Bed</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

@@ -1,0 +1,177 @@
+<div class="container">
+  <h1 class="mt-5">{{ isNewAdmission ? 'New Admission Form' : 'Edit Admission Form' }}</h1>
+  <form class="mt-4" (ngSubmit)="saveAdmission()">
+    <!-- Name -->
+    <div class="row">
+      <h3>Personal Details</h3>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="selectedAdmission.name" required>
+        </div>
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="selectedAdmission.email" required>
+        </div>
+        <!-- Phone -->
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone:</label>
+          <input type="tel" class="form-control" id="phone" name="phone" [(ngModel)]="selectedAdmission.phone" required>
+        </div>
+        <!-- Age -->
+        <div class="mb-3">
+          <label for="age" class="form-label">Age:</label>
+          <input type="number" class="form-control" id="age" name="age" [(ngModel)]="selectedAdmission.age" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Sex:</label>
+          <div class="row">
+          <div class="col-md-4">
+            <input type="radio" id="male" name="sex" value="male" [(ngModel)]="selectedAdmission.sex" required>
+            <label for="male">Male</label>
+          </div>
+          <div class="col-md-4">
+            <input type="radio" id="female" name="sex" value="female" [(ngModel)]="selectedAdmission.sex" required>
+            <label for="female">Female</label>
+          </div>
+          <div class="col-md-4">
+            <input type="radio" id="others" name="sex" value="others" [(ngModel)]="selectedAdmission.sex" required>
+            <label for="others">Others</label>
+          </div>
+        </div>
+        </div>
+        
+        <!-- Blood Group -->
+        <div class="mb-3">
+          <label for="bloodGroup" class="form-label">Blood Group:</label>
+          <input type="text" class="form-control" id="bloodGroup" name="bloodGroup" [(ngModel)]="selectedAdmission.bloodGroup" required>
+        </div>
+        <!-- Emergency Contact Number -->
+    <div class="mb-3">
+      <label for="emergencyContactNumber" class="form-label">Emergency Contact Number:</label>
+      <input type="tel" class="form-control" id="emergencyContactNumber" name="emergencyContactNumber" [(ngModel)]="selectedAdmission.emergencyContactNumber" required>
+    </div>
+    <!-- Relationship With Patient -->
+    <div class="mb-3">
+      <label for="relationshipWithPatient" class="form-label">Relationship With Patient:</label>
+      <input type="text" class="form-control" id="relationshipWithPatient" name="relationshipWithPatient" [(ngModel)]="selectedAdmission.relationshipWithPatient" required>
+    </div>
+      </div>
+
+    </div>
+    
+    <!-- Sex -->
+    <!-- <div class="mb-3">
+      <label for="sex" class="form-label">Sex:</label>
+      <input type="text" class="form-control" id="sex" name="sex" [(ngModel)]="selectedAdmission.sex" required>
+    </div> -->
+    <h3>Admission Details</h3>
+    <div class="mb-3">
+      <label for="department" class="form-label">Department:</label>
+      <select class="form-select" id="department" name="department" [(ngModel)]="selectedAdmission.department" required>
+        <option value="">Select Department</option>
+        <!-- Loop through doctors to populate options -->
+        <option *ngFor="let doctor of doctors" [value]="doctor.department">{{ doctor.department }}</option>
+      </select>
+    </div>
+    <!-- Doctor Selection -->
+    <div class="mb-3">
+      <label for="doctor" class="form-label">Doctor:</label>
+      <select class="form-select" id="doctor" name="doctor" [(ngModel)]="selectedAdmission.doctor" required>
+        <option value="">Select Doctor</option>
+        <!-- Loop through doctor departments -->
+        <ng-container *ngFor="let department of doctorDepartments">
+          <optgroup label="{{ department }}">
+            <!-- Loop through filtered doctors for each department -->
+            <option *ngFor="let doctor of filterDoctorsByDepartment(department)" [value]="doctor.doctorName">{{ doctor.doctorName }}</option>
+          </optgroup>
+        </ng-container>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="diseaseDescription" class="form-label">Disease Description:</label>
+      <textarea class="form-control" id="diseaseDescription" name="diseaseDescription" [(ngModel)]="selectedAdmission.diseaseDescription" required></textarea>
+    </div>
+    <!-- Admission Date -->
+    <div class="mb-3">
+      <label for="admissionDate" class="form-label">Admission Date:</label>
+      <input type="date" class="form-control" id="admissionDate" name="admissionDate" [(ngModel)]="selectedAdmission.admissionDate" required>
+    </div>
+    <!-- bed -->
+    <div class="mb-3">
+      <label for="badeManage" class="form-label">Bed:</label>
+      <select class="form-select" id="badeManage" name="badeManage" [(ngModel)]="selectedAdmission.badeManage" required>
+        <option value="">Select Bed</option>
+          
+            <!-- Loop through filtered doctors for each department -->
+            <option *ngFor="let b of bed" [value]="b.bedNumber">{{ b.bedNumber }}</option>
+         
+       
+      </select>
+    </div>
+    
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">{{ isNewAdmission ? 'Add' : 'Update' }} Admission</button>
+      <button type="button" class="btn btn-danger" (click)="createAdmission()">Cancel</button>
+      <!-- <button type="submit" class="btn btn-primary">{{ isNewAdmission ?  : 'Update' }} Admission</button>
+      
+      <button type="submit" class="btn btn-primary"  (click)="saveAdmission()">Add Admission</button> -->
+    </div>
+  </form>
+  </div>
+ 
+
+
+  <!-- <div class="container"> -->
+  <!-- Table to display admissions -->
+  <h2 class="mt-5">Admissions</h2>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th>Admission ID</th>
+        <th>Name</th>
+        <!-- <th>Email</th> -->
+        <!-- <th>Phone</th> -->
+        <!-- <th>Age</th> -->
+        <!-- <th>Sex</th> -->
+        <th>Blood Group</th>
+        <th>Department</th>
+        <th>Doctor</th>
+        <th>Disease Description</th>
+        <th>Admission Date</th>
+        <!-- <th>Bed number</th> -->
+        <th>Emergency Contact Number</th>
+        <!-- <th>Relationship With Patient</th> -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through admissions to populate table rows -->
+      <tr *ngFor="let admission of admissions; index as i">
+        <td>{{ i+1 }}</td>
+        <td>{{ admission.name }}</td>
+        <!-- <td>{{ admission.email }}</td> -->
+        <!-- <td>{{ admission.phone }}</td> -->
+        <!-- <td>{{ admission.age }}</td> -->
+        <!-- <td>{{ admission.sex }}</td> -->
+        <td>{{ admission.bloodGroup }}</td>
+        <td>{{ admission.department }}</td>
+        <td>{{ admission.doctor }}</td>
+        <td>{{ admission.diseaseDescription }}</td>
+        <td>{{ admission.admissionDate | date }}</td>
+        <!-- <td>{{ admission.badeManage}}</td> -->
+        <td>{{ admission.emergencyContactNumber }}</td>
+        <!-- <td>{{ admission.relationshipWithPatient }}</td> -->
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="onSelect(admission)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteAdmission(admission)">Delete</button>
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
+ <!-- </div> -->

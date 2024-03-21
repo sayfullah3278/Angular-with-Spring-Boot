@@ -1,0 +1,85 @@
+<div class="container mt-5">
+
+  <form (submit)="dischargePatient()">
+    <label for="admissionId">Admission ID:</label>
+    <input type="number" id="admissionId" name="admissionId" [(ngModel)]="admissionId">
+    <button type="submit">Discharge Patient</button>
+  </form>
+  
+
+    <h2>Discharge Records</h2>
+
+    <!-- Edit Discharge Form -->
+    <div *ngIf="selectedDischarge">
+      <h3>Edit Discharge</h3>
+      <!-- <form  (ngSubmit)="onSave()"> -->
+      <form >
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="selectedDischarge.name">
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" [(ngModel)]="selectedDischarge.age">
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Admission Date</label>
+          <input type="text" class="form-control" id="admissiondate" [(ngModel)]="selectedDischarge.admissiondate">
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Discharge Date</label>
+          <input type="text" class="form-control" id="dischargeDate" [(ngModel)]="selectedDischarge.dischargeDate">
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Admitted Days</label>
+          <input type="number" class="form-control" id="admitade_dayse" [(ngModel)]="selectedDischarge.admitade_dayse">
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Summary</label>
+          <input type="text" class="form-control" id="dischargeSummary" [(ngModel)]="selectedDischarge.dischargeSummary">
+        </div>
+        <!-- Add more fields as necessary -->
+        <button type="submit" class="btn btn-primary" (click)=" SaveDischarges(selectedDischarge)">Save Changes</button>
+      </form>
+    </div>
+  </div>
+    <!-- Discharge Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Age</th>
+          <th scope="col">Admission Date</th>
+          <th scope="col">Discharge Date</th>
+          <th scope="col">Admitted Days</th>
+          <th scope="col">Summary</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Discharge records will be inserted here -->
+        <tbody>
+          <!-- Loop through appointments to populate table rows -->
+          <tr *ngFor="let discharg of discharges; index as i">
+            
+            <td>{{ i+1 }}</td>
+            <td>{{ discharg.name }}</td>
+            <td>{{ discharg.age }}</td>
+            <td>{{ discharg.admissiondate }}</td>
+            <td>{{ discharg.dischargeDate }}</td>
+            <td>{{ discharg.admitade_dayse }}</td>
+            <td>{{ discharg.dischargeSummary }}</td>
+           
+            <td>
+              <button class="btn btn-sm btn-primary" (click)="updateDoctor(discharg)">Edit</button>
+              <!-- <button class="btn btn-sm btn-danger" (click)="deleteAppointment(appointment)">Delete</button> -->
+             <button class="btn btn-sm btn-danger" (click)="onDelete(discharg.dischargeId)">Delete</button>
+    
+            </td>
+          </tr>
+        </tbody>
+      
+    </table>
+
+    

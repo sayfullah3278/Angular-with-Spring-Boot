@@ -1,0 +1,91 @@
+<div class="container">
+  <h2>Doctor List</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Department</th>
+        <th>Specialization</th>
+        <th>Qualification</th>
+        <th>Experience</th>
+        <th>Joining Date</th>
+        <th>Fees</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doctor of doctors">
+        <td>{{ doctor.doctor_id }}</td>
+        <td>{{ doctor.doctorName }}</td>
+        <td>{{ doctor.phone }}</td>
+        <td>{{ doctor.department }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>{{ doctor.qualification }}</td>
+        <td>{{ doctor.experience }}</td>
+        <td>{{ doctor.joiningDate }}</td>
+        <td>{{ doctor.doctorFee }}</td>
+        <td>
+          <button class="btn btn-sm btn-info" (click)="selectDoctor(doctor)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteDoctor(doctor.doctor_id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="container mt-4">
+    <h2>Doctor Form</h2>
+    <form (submit)="selectedDoctor ? updateDoctor(selectedDoctor) : saveDoctor(doctor)" #doctorForm="ngForm">
+      <div class="mb-3">
+        <label for="doctorName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="doctorName" [(ngModel)]="doctor.doctorName" name="doctorName" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="tel" class="form-control" id="phone" [(ngModel)]="doctor.phone" name="phone" required>
+      </div>
+      <div class="mb-3">
+        <label for="department">Department:</label>
+        <select id="department" class="form-select" [(ngModel)]="doctor.department" name="department" required>
+          <option value="">Select Department</option>
+          <option value="General Services">General Services</option>
+          <option value="Gynecology">Gynecology</option>
+          <option value="Hematology">Hematology</option>
+          <option value="Maternity">Maternity</option>
+          <option value="Microbiology">Microbiology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Nephrology">Nephrology</option>
+          <option value="Otolaryngology">Otolaryngology</option>
+          <option value="Obstetrics">Obstetrics</option>
+          <option value="Breast Screening">Breast Screening</option>
+          <option value="Urology">Urology</option>
+          <option value="Cardiology">Cardiology</option>
+        </select> 
+      </div>
+      <div class="mb-3">
+        <label for="specialization" class="form-label">Specialization</label>
+        <input type="text" class="form-control" id="specialization" [(ngModel)]="doctor.specialization" name="specialization" required>
+      </div>
+      <div class="mb-3">
+        <label for="qualification" class="form-label">Qualification</label>
+        <input type="text" class="form-control" id="qualification" [(ngModel)]="doctor.qualification" name="qualification" required>
+      </div>
+      <div class="mb-3">
+        <label for="experience" class="form-label">Experience</label>
+        <input type="text" class="form-control" id="experience" [(ngModel)]="doctor.experience" name="experience" required>
+      </div>
+      <div class="mb-3">
+        <label for="joiningDate">Joining Date:</label>
+        <input type="date" class="form-control" id="joiningDate" [(ngModel)]="doctor.joiningDate" name="joiningDate">
+      </div>
+      <div class="mb-3">
+        <label for="joiningDate">Fees:</label>
+        <input type="text" class="form-control" id="joiningDate" [(ngModel)]="doctor.doctorFee" name="doctorFee">
+      </div>
+      <button type="submit" class="btn btn-primary">{{ selectedDoctor ? 'Update' : 'Save' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="clearSelection()">Reset</button>
+    </form>
+  </div>
+  
+</div>
