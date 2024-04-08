@@ -36,7 +36,7 @@ const routes: Routes = [
    {path:"discharge", component:DischargeComponent} ,
    {path:"pasentsarch", component:PasentsarchComponent} ,
    {path:"home", component:HomeComponent} ,
-   {path:"pdf", component:PdfComponent} ,
+   {path:"pdf/:id", component:PdfComponent} ,
    {path:"bade", component:BademanageComponent}, 
    {path:"dashboard", component:MainBodyComponent},
   ] },

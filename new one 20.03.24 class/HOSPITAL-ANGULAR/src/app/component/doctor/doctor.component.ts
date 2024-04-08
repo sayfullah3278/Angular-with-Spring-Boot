@@ -37,7 +37,7 @@ export class DoctorComponent implements OnInit {
   }
 
   updateDoctor(doctor: Doctor): void {
-    if (doctor && doctor.doctor_id) {
+    if (doctor && doctor.doctorId) {
       this.doctorService.updateDoctor(doctor).subscribe(
         (data: Doctor) => {
           console.log('Doctor updated:', data);

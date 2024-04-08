@@ -1,39 +1,98 @@
-<p>pdf works!</p>
- <!-- bill Pdf  start -->
-                
- <!-- <div class="row" #printableArea> -->
-    <!-- Booking Data Section (Left Side) -->
-     <!-- <div class="col-md-6" >
-        <div style="margin-left: 30px">
-         <h3>Bill ID </h3> -->
-                            <!-- <label for="">Bill Id </label>
-                            <p>{{ bill.bill_id}}</p>
-                            <label for="">Patient Name </label>
-                            <p>{{ bill.passent_name}}</p>
-                            <label>Age:</label>
-                            <p>{{ bill.age}}</p>
-                            <label>Admission Date:</label>
-                            <p>{{bill.age}}</p>
-                            <label>Discharge Date:</label>
-                            <p>{{bill.admition_date}}</p>
-                            <label>Admitted Days:</label>
-                            <p>{{bill.admitedDays}}</p>
-                            <label>Daily Cost:</label>
-                            <p>{{bill.daily_cost}}</p>
-                            <label>Total Amount:</label>
-                            <p>{{bill.total_amount}}</p>
-                            <label>Paid Amount:</label>
-                            <p>{{bill.paid_amount}}</p>
-                            <label>Due Amount:</label>
-                            <p>{{bill.due_amount}}</p>
-                            <label>Payment Mathod:</label>
-                            <p>{{bill.paymentMethod}}</p>
-                             -->
+<div class="container">
+    <div class="card-body" #printableArea>
+        <div class="mx-3 py-2">
+            <h4 class="text-center text-uppercase">KM Hospital</h4>
+            <p class="text-center">Addrss</p>
+            <div class="row px-2">
+                <div class="col-4 border">
+                    <p class="mb-0">Patient Name: {{billAdmission.name}}</p>
+                </div>
+                <div class="col-4 border">
+                    <p class="mb-0">Admition Date: {{billAdmission.admissionDate}}</p>
+                </div>
+                <div class="col-4 border">
+                    <p class="mb-0">Discharge Date: {{bill.discharg_date}}</p>
+                </div>
+                <div class="col-4 border">
+                    <p class="mb-0">Doctor Name: {{docAdmission.doctorName}}</p>
+                </div>
+                <div class="col-4 border">
+                    <p class="mb-0">Disease: {{billAdmission.diseaseDescription}}</p>
+                </div>
+                <div class="col-4 border">
+                    <p class="mb-0">Discharge Date:</p>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col-md-12 p-0">
+                    <div class="card rounded-0 shadow-none border h-100 ">
+                        <div class="px-3 py-1 bg-light">
+                            <h5 class="pt-2">Bill Details</h5>
+                        </div>
+                        <div class="bg-light">
+                            <div class="table-responsive px-2">
+                                <table class="table table-striped table-bordered " id="largeTable">
+                                    <thead class="border-bottom">
+                                        <tr>
+                                            <th>SI</th>
+                                            <th>Details</th>
+                                            <th>Days</th>
+                                            <!-- <th>UOM</th> -->
 
-                  
-                <!-- bill Pdf  stop -->
+                                            <th class="text-right">Unit Price</th>
+                                            <th class="text-right">Total Cost</th>
+                                            <!-- <th class="text-right">Total Cost</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                              Bed: {{bedAdmission.bedNumber}}  
+                                            </td>
+                                            <td>{{bill.admitedDays}}</td>
+                                            <!-- <td></td> -->
+                                            <td class="text-end">{{bill.daily_cost}} </td>
+                                            <td class="text-end">{{bill.total_amount}}</td>
+                                            <!-- <td class="text-end">1500</td> -->
 
-        <!-- </div>
-     </div>
-   </div> -->
-      <!-- bill Pdf  stop -->
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                              Doctor: {{docAdmission.doctorName}}
+                                            </td>
+                                            <td>{{bill.admitedDays}}</td>
+                                            <!-- <td></td> -->
+                                            <td class="text-end">{{docAdmission.doctorFee}}</td>
+                                            <td class="text-end" id="totalPriceLarge">{{docAdmission.doctorFee}} * {{bill.admitedDays}} </td>
+                                            <!-- <td class="text-end">2000</td> -->
+
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-end fw-bold">Total:</td>
+
+                                            <td id="totalprice" class="text-end fw-bold" id="totalmoney">82.1</td>
+
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary" (click)="printDiv()"><i
+                class="fas fa-print mr-2"></i> Print
+        </button>
+    </div>
+</div>
+
+

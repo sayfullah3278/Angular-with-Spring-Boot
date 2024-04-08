@@ -3,6 +3,13 @@ import { Bill } from '../../model/bill.model';
 import { BillService } from '../../service/bill.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Discharge } from '../../model/discharge.model';
+import { DischargeService } from '../../service/discharge.service';
+import { Console, error } from 'node:console';
+import { Admission } from '../../model/admission.model';
+import { AdmissionService } from '../../service/admission.service';
+import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-bill',
@@ -11,35 +18,78 @@ import { Discharge } from '../../model/discharge.model';
 })
 export class BillComponent implements OnInit {
   bills: Bill[] = [];
+  admissions: Admission[] = [];
   selectedBill!: Bill;
+  
   isNewBill!: boolean;
   adDate:any
   billForm!: FormGroup;
+  // to create pdf
+  admissionId:any;
 
+
+  dischargeT:Discharge[]=[];
+  admissionbill:Admission = new Admission();
   discharge: Discharge = new Discharge();
   // admition_date:string=''
   // discharg_date:string=''
 
 
-  constructor(private billService: BillService, private fb: FormBuilder) { }
+  constructor(private billService: BillService,
+    private dischargeserv: DischargeService , 
+    private admissionService: AdmissionService,
+    private router:Router,
+    private fb: FormBuilder) { }
 
 
 
 
-  // generateBill(dischargeInfo: any): void {
-  //   this.billService.generateBillFromDischarge(dischargeInfo)
-  //     .subscribe(
-  //       bill => {
-  //         console.log('Generated bill:', bill);
-  //         // Handle the generated bill here (e.g., display it to the user)
-  //       },
-  //       error => {
-  //         console.error('Error generating bill:', error);
-  //         // Handle errors here
-  //       }
-  //     );
-  // }
 
+
+
+  getPatientDetails():void{
+    let patientName:string| undefined= this.selectedBill.passent_name;
+    console.log(patientName);
+
+    const dischargeDetails:Discharge | undefined=  this.dischargeT.find(res => res.name=== this.selectedBill.passent_name);
+    console.log(dischargeDetails);
+    
+    // this.selectedBill.age=dischargeDetails?.age?.toString();
+    this.selectedBill.age = (dischargeDetails?.age ?? '') as string;
+    this.selectedBill.admition_date=(dischargeDetails?.admissiondate??'')as string;
+    this.selectedBill.discharg_date=(dischargeDetails?.dischargeDate??'')as string;
+    this.selectedBill.admitedDays=(dischargeDetails?.admitade_dayse??'')as number;
+    this.selectedBill.daily_cost=(dischargeDetails?.admission?.badeManage?.bedCharge??'')as number;
+    // this.selectedBill.admissionId?=(dischargeDetails?.admission?.admission_id??'')as number;
+    // this.selectedBill.admissionId?.admission_id=(dischargeDetails?.admission?.admission_id??0)as number
+    console.log("inside patient details admision id")
+   console.log((dischargeDetails?.admission?.admission_id??'')as number)
+    this.admissionId = (dischargeDetails?.admission?.admission_id??'')as number
+    if (this.selectedBill.admissionId) {
+      this.selectedBill.admissionId.admission_id = this.admissionId
+      console.log(this.selectedBill.admissionId.admission_id)
+  }
+
+    
+
+   
+  }
+  getAllAdmissionbyId(adId:any){
+    this.admissionService.getAdmissionById(adId)
+    .subscribe(admissions => this.admissionbill = admissions);
+  }
+  findByAdId(adId:number){
+    this.router.navigate(['/pdf',adId]);
+  }
+  getAllAdmission(){
+    this.admissionService.getAllAdmissions()
+    .subscribe(admissions => this.admissions = admissions);
+  }
+
+  onChangeSelect(): void {
+    // Call the getPatientDetails method
+    this.getPatientDetails();
+  }
 
   generateBill(discharge: Discharge): void {
     this.billService.generateBillFromDischarge(discharge).subscribe(
@@ -57,9 +107,12 @@ export class BillComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.isNewBill = false;
-    this.selectedBill = new Bill(0, '', '', '', '', 0, 0, 0, 0, 0, '');
+    this.isNewBill = true;
+    // this.selectedBill = new Bill(0, '', '', '', '', 0, 0, 0, 0, 0, '',0);;
+    this.selectedBill = new Bill();;
     this.loadBills();
+    this.getAllDischarge();
+    this.getAllAdmission();
     this.billForm = this.fb.group({
       passent_name: ['', Validators.required],
       age: ['', Validators.required],
@@ -80,6 +133,13 @@ export class BillComponent implements OnInit {
     });
   }
 
+  getAllDischarge():void{
+
+    this.dischargeserv.getAllDischarges().subscribe(dischargeT=> {
+      this.dischargeT=dischargeT;
+    });
+  }
+
   selectBill(bill: Bill): void {
     this.isNewBill = false;
     this.selectedBill = bill;
@@ -87,28 +147,57 @@ export class BillComponent implements OnInit {
 
   newBill(): void {
     this.isNewBill = true;
-    this.selectedBill = new Bill(0, '', '', '', '', 0, 0, 0, 0, 0, '');
+    // this.selectedBill = new Bill(0, '', '', '', '', 0, 0, 0, 0, 0, '',0);;
+    this.selectedBill = new Bill();;
   }
 
   saveBill(): void {
     if (this.isNewBill) {
-      this.billService.createBill(this.selectedBill).subscribe(bill => {
-        this.bills.push(bill);
-        this.isNewBill = false;
-      });
-    } else {
-      this.billService.updateBill(this.selectedBill.bill_id, this.selectedBill).subscribe(bill => {
-        const index = this.bills.findIndex(b => b.bill_id === bill.bill_id);
-        if (index !== -1) {
-          this.bills[index] = bill;
-        }
-      });
-    }
+      console.log("inside")
+
+      this.billService.createBill(this.selectedBill).subscribe({
+        // console.log(this.admissionId)
+      // this.billService.saveBill(this.selectedBill,this.admissionId).subscribe({
+
+        next: bill=> {
+          this.bills.push(bill);
+          this.isNewBill=false;
+          alert("New bill created successfully")
+          console.log(this.selectedBill);
+          // to create pdf
+          this.findByAdId(this.admissionId)
+        }, error: err=> {console.log(err);
+        alert("data not save")}
+      })
+
+      // this.billService.createBill(this.selectedBill).subscribe( bill => {
+      //   this.bills.push(bill);
+      //   this.isNewBill = false;
+      //   alert("New bill created successfully ")
+      // });
+    } 
+
+
+    // else {
+    //   this.billService.updateBill(this.selectedBill.billId, this.selectedBill).subscribe(bill => {
+    //     const index = this.bills.findIndex(b => b.billId === bill.billId);
+    //     if (index !== -1) {
+    //       this.bills[index] = bill;
+    //     }
+    //   });
+    // }
   }
+  // this.service.getAllBuyers().subscribe({
+  //   next: res => {
+  //     this.buyer = res;
+  //   },
+  //   error: err => {
+  //     console.log(err);
+  //   }
 
   deleteBill(billId: number): void {
     this.billService.deleteBill(billId).subscribe(() => {
-      this.bills = this.bills.filter(b => b.bill_id !== billId);
+      this.bills = this.bills.filter(b => b.billId !== billId);
     });
   }
 
@@ -178,23 +267,44 @@ export class BillComponent implements OnInit {
 
 calculate() {
   // calculate the admitted days, total amount, and due amount based on the input values
-  let adDate = new Date(this.billForm.value.admition_date);
-  let dcDate = new Date(this.billForm.value.discharg_date);
-  let cost = this.billForm.value.daily_cost;
-  let days = Math.round((dcDate.getTime() - adDate.getTime()) / (1000 * 3600 * 24));
-  console.log(" days " + days)
-  this.billForm.controls['admitedDays'].setValue(days);
-  let result= days * cost;
-  this.billForm.controls['total_amount'].setValue(result)
-  this.billForm.controls['due_amount'].setValue(result)
+  
+  let days = this.selectedBill.admitedDays;
+  let dailybedCharge = this.selectedBill.daily_cost
+  
+  if(days && dailybedCharge != null){
+    let result= days * dailybedCharge;
+    this.selectedBill.total_amount = result
+    console.log("result" + result)
+  }
+  
+
   };
   dueAmount(){
-   let total= this.billForm.value.total_amount;
-   let paid = this.billForm.value.paid_amount
-  let result:number= parseFloat(total) - parseFloat(paid); 
-  this.billForm.controls['due_amount'].setValue(result) ;
+   let total= this.selectedBill.total_amount;
+   let paid = this.selectedBill.paid_amount;
+   
+  let result= total - paid; 
+  this.selectedBill.due_amount = result;
 }
 // <calculat>
+
+
+
+
+generatePDF(): void {
+  const element = document.getElementById('pdfContent')!;
+
+  html2canvas(element).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    const imgProps= pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('bill.pdf');
+  });
+}
 
   
 }

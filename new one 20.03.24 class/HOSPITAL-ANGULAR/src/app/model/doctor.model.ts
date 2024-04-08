@@ -1,5 +1,5 @@
 export class Doctor {
-  doctor_id: number;
+  doctorId: number;
   doctorName: string;
   phone: string;
   department: string;
@@ -10,7 +10,7 @@ export class Doctor {
   doctorFee: number;
 
   constructor(
-    doctor_id: number = 0,
+    doctorId: number = 0,
     doctorFee: number = 0,
     doctorName: string = '',
     phone: string = '',
@@ -20,7 +20,7 @@ export class Doctor {
     experience: string = '',
     joiningDate: Date = new Date()
   ) {
-    this.doctor_id = doctor_id;
+    this.doctorId = doctorId;
     this.doctorFee = doctorFee;
     this.doctorName = doctorName;
     this.phone = phone;

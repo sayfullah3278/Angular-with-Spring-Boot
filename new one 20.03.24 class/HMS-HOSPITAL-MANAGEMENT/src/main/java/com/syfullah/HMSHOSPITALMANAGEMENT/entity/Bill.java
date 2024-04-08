@@ -1,10 +1,7 @@
 package com.syfullah.HMSHOSPITALMANAGEMENT.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +35,10 @@ public class Bill {
     private double due_amount;
 
     private String paymentMethod;
+
+    @ManyToOne
+    private Admission admissionId;
+
 
 
 

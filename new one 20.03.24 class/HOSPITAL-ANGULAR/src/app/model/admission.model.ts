@@ -16,7 +16,12 @@ export class Admission {
     emergencyContactNumber?: string;
     relationshipWithPatient?: string;
     doctorsId?: Doctor ;
-    badeManage?:BadeManage;
+    badeManage?:{
+      bedId: number,
+      bedNumber: string,
+      bedCharge: number,
+      bedCatagori: string
+  };
    
   }
 //   import { Doctor } from './doctor.model';

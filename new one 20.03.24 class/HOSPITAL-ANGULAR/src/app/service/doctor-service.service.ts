@@ -76,7 +76,7 @@ export class DoctorService {
   }
 
   updateDoctor(doctor: Doctor): Observable<Doctor> {
-    return this.http.put<Doctor>(`${this.apiUrl}/${doctor.doctor_id}`, doctor);
+    return this.http.put<Doctor>(`${this.apiUrl}/${doctor.doctorId}`, doctor);
   }
 
   deleteDoctor(id: number): Observable<{}> {

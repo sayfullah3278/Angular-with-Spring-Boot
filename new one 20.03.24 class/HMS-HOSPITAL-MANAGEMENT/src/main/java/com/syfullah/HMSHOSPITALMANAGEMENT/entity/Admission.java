@@ -50,4 +50,8 @@ public class Admission {
     @ManyToOne
     @JoinColumn(name = "bedId")
     private BadeManage badeManage;
+
+    public Admission(int admissionId) {
+        this.admissionId = admissionId;
+    }
 }

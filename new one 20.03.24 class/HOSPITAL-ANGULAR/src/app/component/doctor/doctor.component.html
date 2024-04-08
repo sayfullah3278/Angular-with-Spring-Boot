@@ -16,8 +16,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let doctor of doctors">
-        <td>{{ doctor.doctor_id }}</td>
+      <tr *ngFor="let doctor of doctors, index as i">
+        <td>{{ i+1 }}</td>
         <td>{{ doctor.doctorName }}</td>
         <td>{{ doctor.phone }}</td>
         <td>{{ doctor.department }}</td>
@@ -28,7 +28,7 @@
         <td>{{ doctor.doctorFee }}</td>
         <td>
           <button class="btn btn-sm btn-info" (click)="selectDoctor(doctor)">Edit</button>
-        <button class="btn btn-sm btn-danger" (click)="deleteDoctor(doctor.doctor_id)">Delete</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteDoctor(doctor.doctorId)">Delete</button>
         </td>
       </tr>
     </tbody>

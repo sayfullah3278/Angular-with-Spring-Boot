@@ -19,9 +19,16 @@ export class BillService {
   getBillById(id: number): Observable<Bill> {
     return this.http.get<Bill>(`${this.apiUrl}/${id}`);
   }
+  getBillByadmissionId(id: number): Observable<Bill> {
+    return this.http.get<Bill>(`${this.apiUrl}/ad/${id}`);
+  }
 
   createBill(bill: Bill): Observable<Bill> {
     return this.http.post<Bill>(this.apiUrl, bill);
+  }
+
+  saveBill(bill: Bill, adid:number): Observable<Bill> {
+    return this.http.post<Bill>(`${this.apiUrl}/save/${adid}`,bill);
   }
 
   updateBill(id: number, bill: Bill): Observable<Bill> {
