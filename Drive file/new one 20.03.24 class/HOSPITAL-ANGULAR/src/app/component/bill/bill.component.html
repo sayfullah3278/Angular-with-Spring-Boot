@@ -1,0 +1,66 @@
+<div id="pdfContent" class="container mt-3">
+  <h1 class="mb-4">Kms Hospital </h1>
+
+  <form (submit)="saveBill()">
+    <div class="mb-3 row">
+    <div class="col">
+      <label for="patientName" class="form-label">Patient Name:</label>
+      <select class="form-select" id="patientName" [(ngModel)]="selectedBill.passent_name" (change)="onChangeSelect()" name="patientName" required>
+        <option *ngFor="let patient of dischargeT" [value]="patient.name">{{ patient.name }}</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="age" class="form-label">Age:</label>
+      <input type="number" class="form-control" id="age" [(ngModel)]="selectedBill.age" name="age" required>
+    </div>
+  </div>
+    <div class="mb-3 row">
+      <div class="col">
+        <label for="admition_date" class="form-label">Admission Date:</label>
+        <input type="date" class="form-control" id="admition_date" [(ngModel)]="selectedBill.admition_date" name="admition_date" required>
+      </div>
+      <div class="col">
+        <label for="discharg_date" class="form-label">Discharge Date:</label>
+        <input type="date" class="form-control" id="discharg_date" [(ngModel)]="selectedBill.discharg_date" name="discharg_date" required>
+      </div>
+      <div class="col">
+        <label for="admitedDays" class="form-label">Admitted Days:</label>
+        <input type="number" class="form-control" id="admitedDays" [(ngModel)]="selectedBill.admitedDays" name="admitedDays" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <div class="col">
+        <label for="daily_cost" class="form-label">Daily Cost:</label>
+        <input type="number" class="form-control" id="daily_cost" [(ngModel)]="selectedBill.daily_cost" name="daily_cost" required>
+      </div>
+      <div class="col">
+        <label for="docfee" class="form-label">Doctor Fees:</label>
+        <input type="number" class="form-control" id="docfee" #docfee name="docfee" required>
+        
+      </div>
+    </div>
+    <div class="row">
+    <div class="mb-3 col-md-3">
+      <label for="total_amount" class="form-label">Total Amount:</label>
+      <input type="number" class="form-control" id="total_amount" [(ngModel)]="selectedBill.total_amount" name="total_amount" (click)="calculate()" required>
+    </div>
+    <div class="mb-3 col-md-3">
+      <label for="paid_amount" class="form-label">Paid Amount:</label>
+      <input type="number" class="form-control" id="paid_amount" [(ngModel)]="selectedBill.paid_amount" name="paid_amount" (keyup)="dueAmount()" required>
+    </div>
+    <div class="mb-3 col-md-3">
+      <label for="due_amount" class="form-label">Due Amount:</label>
+      <input type="number" class="form-control text-danger" id="due_amount" [(ngModel)]="selectedBill.due_amount" name="due_amount" required>
+    </div>
+    <div class="mb-3 col-md-3">
+      <label for="paymentMethod" class="form-label">Payment Method:</label>
+      <input type="text" class="form-control" id="paymentMethod" [(ngModel)]="selectedBill.paymentMethod" name="paymentMethod" required>
+    </div>
+  </div>
+    <button type="submit" class="btn btn-primary">Generate Bill</button>
+  </form>
+</div>
+
+<div class="mt-4">
+  <!-- <button class="btn btn-primary" (click)="generatePDF()">Generate PDF</button> -->
+</div>
