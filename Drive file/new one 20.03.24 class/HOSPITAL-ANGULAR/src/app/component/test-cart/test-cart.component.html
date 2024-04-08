@@ -2,68 +2,69 @@
   
 
   <div class="container mt-3">
-    <h2>Test Carts</h2>
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th>Product ID</th>
-          <th>Product Name</th>
-          <th>Department</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let testCart of testCarts">
-          <td>{{ testCart.productId }}</td>
-          <td>{{ testCart.productName }}</td>
-          <td>{{ testCart.department }}</td>
-          <td>{{ testCart.price }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="onSelect(testCart)">Select</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteTestCart(testCart)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-</div>
-
-<div class="container mt-3">
-    <h2>Add New Test Cart</h2>
-    <form #addToCartForm="ngForm" (ngSubmit)="createTestCart(addToCartForm)">
-      <div class="mb-3">
-        <label for="productName" class="form-label">Product Name:</label>
-        <input type="text" class="form-control" id="productName" name="productName" ngModel required>
-      </div>
-      <div class="mb-3">
-        <label for="department" class="form-label">Department:</label>
-        <input type="text" class="form-control" id="department" name="department" ngModel required>
-      </div>
-      <div class="mb-3">
-        <label for="price" class="form-label">Price:</label>
-        <input type="number" class="form-control" id="price" name="price" ngModel required>
-      </div>
-      <button type="submit" class="btn btn-success" [disabled]="addToCartForm.invalid">Add Test Cart</button>
-    </form>
-</div>
-
-<div class="container mt-3" *ngIf="selectedTestCart">
-    <h2>Edit Test Cart</h2>
-    <form #editForm="ngForm" (ngSubmit)="updateTestCart()">
-      <div class="mb-3">
-        <label for="editProductName" class="form-label">Product Name:</label>
-        <input type="text" class="form-control" id="editProductName" name="editProductName" [(ngModel)]="selectedTestCart.productName" required>
-      </div>
-      <div class="mb-3">
-        <label for="editDepartment" class="form-label">Department:</label>
-        <input type="text" class="form-control" id="editDepartment" name="editDepartment" [(ngModel)]="selectedTestCart.department" required>
-      </div>
-      <div class="mb-3">
-        <label for="editPrice" class="form-label">Price:</label>
-        <input type="number" class="form-control" id="editPrice" name="editPrice" [(ngModel)]="selectedTestCart.price" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Update Test Cart</button>
-    </form>
-</div>
-
-<!-- Add Bootstrap JS bundle at the end of your body tag -->
+      <h2>Test Carts</h2>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Department</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let testCart of testCarts">
+            <td>{{ testCart.productId }}</td>
+            <td>{{ testCart.productName }}</td>
+            <td>{{ testCart.department }}</td>
+            <td>{{ testCart.price }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="onSelect(testCart)">Select</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteTestCart(testCart)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  
+  <div class="container mt-3">
+      <h2>Add New Test Cart</h2>
+      <form #addToCartForm="ngForm" (ngSubmit)="createTestCart(addToCartForm)">
+        <div class="mb-3">
+          <label for="productName" class="form-label">Product Name:</label>
+          <input type="text" class="form-control" id="productName" name="productName" ngModel required>
+        </div>
+        <div class="mb-3">
+          <label for="department" class="form-label">Department:</label>
+          <input type="text" class="form-control" id="department" name="department" ngModel required>
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price:</label>
+          <input type="number" class="form-control" id="price" name="price" ngModel required>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="addToCartForm.invalid">Add Test Cart</button>
+      </form>
+  </div>
+  
+  <div class="container mt-3" *ngIf="selectedTestCart">
+      <h2>Edit Test Cart</h2>
+      <form #editForm="ngForm" (ngSubmit)="updateTestCart()">
+        <div class="mb-3">
+          <label for="editProductName" class="form-label">Product Name:</label>
+          <input type="text" class="form-control" id="editProductName" name="editProductName" [(ngModel)]="selectedTestCart.productName" required>
+        </div>
+        <div class="mb-3">
+          <label for="editDepartment" class="form-label">Department:</label>
+          <input type="text" class="form-control" id="editDepartment" name="editDepartment" [(ngModel)]="selectedTestCart.department" required>
+        </div>
+        <div class="mb-3">
+          <label for="editPrice" class="form-label">Price:</label>
+          <input type="number" class="form-control" id="editPrice" name="editPrice" [(ngModel)]="selectedTestCart.price" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Test Cart</button>
+      </form>
+  </div>
+  
+  <!-- Add Bootstrap JS bundle at the end of your body tag -->
+  

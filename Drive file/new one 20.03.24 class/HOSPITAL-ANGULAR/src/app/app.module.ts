@@ -27,7 +27,6 @@ import { MainBodyComponent } from './template/main-body/main-body.component';
 import { MainLoginComponent } from './template/main-login/main-login.component';
 import { MainLoginLayoutComponent } from './template/main-login-layout/main-login-layout.component';
 import { MainBodyLayoutComponent } from './template/main-body-layout/main-body-layout.component';
-import { TestAndPatientComponent } from './component/test-patient/test-patient.component';
 
 
 @NgModule({
@@ -54,7 +53,6 @@ import { TestAndPatientComponent } from './component/test-patient/test-patient.c
     MainLoginComponent,
     MainLoginLayoutComponent,
     MainBodyLayoutComponent,
-    TestAndPatientComponent
 
   ],
   imports: [

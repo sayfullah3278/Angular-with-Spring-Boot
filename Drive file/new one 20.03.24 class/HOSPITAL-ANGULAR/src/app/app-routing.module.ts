@@ -18,7 +18,6 @@ import { MainBodyComponent } from './template/main-body/main-body.component';
 import { MainLoginComponent } from './template/main-login/main-login.component';
 import { MainLoginLayoutComponent } from './template/main-login-layout/main-login-layout.component';
 import { MainBodyLayoutComponent } from './template/main-body-layout/main-body-layout.component';
-import { TestAndPatientComponent } from './component/test-patient/test-patient.component';
 
 const routes: Routes = [
   { path: '', component: MainLoginLayoutComponent,children:[
@@ -40,7 +39,6 @@ const routes: Routes = [
    {path:"pdf/:id", component:PdfComponent} ,
    {path:"bade", component:BademanageComponent}, 
    {path:"dashboard", component:MainBodyComponent},
-   {path:"test-patient", component:TestAndPatientComponent},
   ] },
 
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, 
